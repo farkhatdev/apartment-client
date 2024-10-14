@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./auth.css";
 import emailSvg from "../utils/icons/email.svg";
 import personSvg from "../utils/icons/person-svg.svg";
@@ -7,6 +7,8 @@ import verifySvg from "../utils/icons/verified-svgrepo-com.svg";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { Link } from "react-router-dom";
+const SERVER_URL = process.env.SERVER_URL;
+console.log(SERVER_URL);
 
 const Register = ({ setIsAuthenticated, setAlert }) => {
   const [step, setStep] = useState(1);
@@ -69,8 +71,8 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
           active: true,
         });
         setOtp(response?.data?.otp);
-        let expiredIn = response?.data?.expiredIn - Date.now();
-        expiredIn = Math.floor(expiredIn / 1000);
+        // let expiredIn = response?.data?.expiredIn - Date.now();
+        // expiredIn = Math.floor(expiredIn / 1000);
 
         setStep(2);
         setLoading(false);
