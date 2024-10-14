@@ -7,8 +7,6 @@ import verifySvg from "../utils/icons/verified-svgrepo-com.svg";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { Link } from "react-router-dom";
-const SERVER_URL = process.env.SERVER_URL;
-console.log(SERVER_URL);
 
 const Register = ({ setIsAuthenticated, setAlert }) => {
   const [step, setStep] = useState(1);
@@ -62,7 +60,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
         }
         setLoading(true);
         const response = await axios.post(
-          "http://localhost:8080/auth/register",
+          "https://apartment-gr2i0orv.b4a.run/auth/register",
           form
         );
         setAlert({
@@ -88,7 +86,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
       try {
         setLoading(true);
         let res = await axios.post(
-          "http://localhost:8080/auth/verify-code",
+          "https://apartment-gr2i0orv.b4a.run/auth/verify-code",
           form
         );
         localStorage.setItem("access-token", res?.data?.token);

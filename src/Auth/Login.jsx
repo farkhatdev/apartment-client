@@ -44,7 +44,7 @@ const Login = ({ isAuthenticated, setIsAuthenticated, setAlert }) => {
       }
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8080/auth/login",
+        "https://apartment-gr2i0orv.b4a.run/auth/login",
         form
       );
       setLoading(false);
