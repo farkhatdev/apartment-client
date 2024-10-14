@@ -1,0 +1,89 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --blue: #2b67f6;
+  --text-color: #333333;
+}
+body {
+  color: var(--text-color);
+  font-family: "Poppins", "Times New Roman", Times, serif;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+.app {
+  background-color: rgb(255, 255, 255);
+  min-height: 100dvh;
+  position: relative;
+}
+
+.container {
+  width: 93%;
+  margin: 0 auto;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.alert {
+  position: absolute;
+  display: none;
+  top: 40px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  left: 50%;
+  min-width: 100px;
+  min-height: 40px;
+  padding: 5px 10px;
+  background-color: red;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgb(222, 216, 216);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  column-gap: 5px;
+}
+.alert.active {
+  display: flex;
+}
+.alert.success {
+  background-color: rgb(39, 233, 39);
+}
+.alert .alert-icon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alert .alert-icon.close {
+  border: 1.5px solid #ffffff;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) and (min-width: 400px) {
+  .alert {
+    width: auto;
+    justify-content: space-around;
+  }
+}
+@media (max-width: 400px) {
+  .alert {
+    width: 90%;
+    padding: 2px 6px;
+    column-gap: 3px;
+    justify-content: space-around;
+  }
+  .alert h4 {
+    font-size: 14px;
+  }
+}
