@@ -6,9 +6,9 @@ const ProtectedRoute = ({ isAuthenticated }) => {
   return isAuthenticated ? (
     <>
       <Navbar />
-      <div className="wrapper">
+      <main className="main">
         <Outlet />
-      </div>
+      </main>
     </>
   ) : (
     <Navigate to="/auth/login" />

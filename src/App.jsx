@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-
 import "./index.css";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./Home/Home";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { jwtDecode } from "jwt-decode";
 import Alert from "./components/Alert";
+import Apartments from "./components/Apartments";
 
 const App = () => {
   const [alert, setAlert] = useState({
@@ -29,12 +28,18 @@ const App = () => {
       {alert.active ? <Alert alert={alert} setAlert={setAlert} /> : null}
 
       <Routes>
-        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/apartments" />
+            ) : (
+              <Navigate to="/auth/lohin" />
+            )
+          }
+        />
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-          <Route
-            path="/"
-            element={<Home setIsAuthenticated={setIsAuthenticated} />}
-          />
+          <Route path="/apartments" element={<Apartments />} />
         </Route>
         {/* Non-Protected Routes */}
         <Route

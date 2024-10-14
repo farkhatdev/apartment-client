@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Apartments = () => {
   return (
     <div className="container">
-      {/* <div className="apartments">
+      <div className="apartments">
         <Link className="apartment-link" to="/apartment/1">
           <Apartment apartments={aprtImg} />
         </Link>
@@ -26,7 +26,7 @@ const Apartments = () => {
         <Link className="apartment-link" to="/apartment/6">
           <Apartment apartments="https://www.pariscorporatehousing.com/content/apartments/15195/images/DSC_1020.jpg" />
         </Link>
-      </div> */}
+      </div>
     </div>
   );
 };
