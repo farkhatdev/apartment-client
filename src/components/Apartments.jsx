@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 const Apartments = () => {
   return (
     <div className="container">
-      
       {/* <div className="apartments">
         <Link className="apartment-link" to="/apartment/1">
           <Apartment apartments={aprtImg} />

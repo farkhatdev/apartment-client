@@ -21,7 +21,9 @@ const Home = ({ setIsAuthenticated }) => {
             Logout
           </button>
         </div>
-        <h2 style={{ textAlign: "center", marginTop: "40px" }}>{decoded.phone}</h2>
+        <h2 style={{ textAlign: "center", marginTop: "40px" }}>
+          {decoded.phone}
+        </h2>
       </div>
     </div>
   );
