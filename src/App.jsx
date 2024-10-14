@@ -34,14 +34,13 @@ const App = () => {
             isAuthenticated ? (
               <Navigate to="/apartments" />
             ) : (
-              <Navigate to="/auth/lohin" />
+              <Navigate to="/auth/login" />
             )
           }
         />
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/apartments" element={<Apartments />} />
         </Route>
-        {/* Non-Protected Routes */}
         <Route
           path="/auth/login"
           element={
