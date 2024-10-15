@@ -1,9 +1,9 @@
 import React from "react";
 import "./navbar.css";
-import logoImg from "../utils/images/logo.png";
-import profilerImg from "../utils/images/profilePicture.png";
+import logoImg from "../../utils/images/logo.png";
+import profilerImg from "../../utils/images/profilePicture.png";
 import { BiSearch } from "react-icons/bi";
-import { RiMenu3Line } from "react-icons/ri";
+// import { RiMenu3Line } from "react-icons/ri";
 import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({ setIsAuthenticated }) => {
@@ -31,9 +31,9 @@ const Navbar = ({ setIsAuthenticated }) => {
             </div>
           </div>
           <div className="nav-left">
-            <div className="menu-burger">
+            {/* <div className="menu-burger">
               <RiMenu3Line size={27} />
-            </div>
+            </div> */}
             <div className="profile">
               <div className="profile-img">
                 <img src={profilerImg} width={40} height={40} alt="" />

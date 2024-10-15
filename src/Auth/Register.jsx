@@ -60,7 +60,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
         }
         setLoading(true);
         const response = await axios.post(
-          "http://localhost:8080/auth/register",
+          "https://apartment-gr2i0orv.b4a.run/auth/register",
           form
         );
         setAlert({
@@ -83,7 +83,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
       try {
         setLoading(true);
         let res = await axios.post(
-          "http://localhost:8080/auth/verify-code",
+          "https://apartment-gr2i0orv.b4a.run/auth/verify-code",
           form
         );
         localStorage.setItem("access-token", res?.data?.token);
