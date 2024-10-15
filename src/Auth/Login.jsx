@@ -6,12 +6,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 
-const Login = ({ isAuthenticated, setIsAuthenticated, setAlert }) => {
+const Login = ({ setIsAuthenticated, setAlert }) => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ phone: "", password: "" });
   const handleChange = (e) => {
     try {
+      let value = e.target.value;
+      let lastLetter = String(value).at(value.length - 1);
+
+      const regex = /^[0-9]*$/;
       if (e.target.name === "phone") {
+        if (!regex.test(lastLetter)) return;
         let phoneNum = String(e.target.value);
         if (!phoneNum.startsWith("+998")) {
           setForm({
@@ -44,7 +49,7 @@ const Login = ({ isAuthenticated, setIsAuthenticated, setAlert }) => {
       }
       setLoading(true);
       const response = await axios.post(
-        "https://apartment-gr2i0orv.b4a.run/auth/login",
+        "http://localhost:8080/auth/login",
         form
       );
       setLoading(false);

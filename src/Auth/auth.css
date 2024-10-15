@@ -92,6 +92,11 @@
   width: 180px;
   text-align: center;
   letter-spacing: 1px;
+  transition: background-color 0.3s;
+}
+.form-group.form-buttons button:hover {
+  background-color: rgb(119, 43, 189);
+  transition: background-color 0.3s;
 }
 
 .form-group.form-buttons button.loading {

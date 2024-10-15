@@ -27,30 +27,30 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
     });
   }, [step]);
 
-  // let min = "";
-  // let sec = "";
-
-  // if (otpExpiredIn) {
-  //   min = String(Math.floor(otpExpiredIn / 60));
-  //   sec = String(otpExpiredIn - Math.floor(otpExpiredIn / 60) * 60);
-  // }
-
   const handleChange = (e) => {
     let value = e.target.value;
-    if (e.target.name === "phone") {
-      if (value === "." || value === ",") return;
+    let lastLetter = String(value).at(value.length - 1);
+    const regexEng = /^[A-Za-z]*$/;
+    const regex = /^[0-9]*$/;
+    if (e.target.name === "name") {
+      if (!regexEng.test(lastLetter)) return;
+      setForm({ ...form, name: value });
+    } else if (e.target.name === "phone") {
+      if (!regex.test(lastLetter)) return;
       let phoneNum = String(value);
       if (!phoneNum.startsWith("+998")) {
         setForm({ ...form, phone: "+998" });
       } else setForm({ ...form, phone: phoneNum });
-    } else
+    } else {
       setForm({
         ...form,
         [e.target.name]: value,
       });
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (step === 1) {
       try {
         const { name, phone, password, confirmPasword } = form;
@@ -60,7 +60,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
         }
         setLoading(true);
         const response = await axios.post(
-          "https://apartment-gr2i0orv.b4a.run/auth/register",
+          "http://localhost:8080/auth/register",
           form
         );
         setAlert({
@@ -69,9 +69,6 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
           active: true,
         });
         setOtp(response?.data?.otp);
-        // let expiredIn = response?.data?.expiredIn - Date.now();
-        // expiredIn = Math.floor(expiredIn / 1000);
-
         setStep(2);
         setLoading(false);
       } catch (error) {
@@ -86,7 +83,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
       try {
         setLoading(true);
         let res = await axios.post(
-          "https://apartment-gr2i0orv.b4a.run/auth/verify-code",
+          "http://localhost:8080/auth/verify-code",
           form
         );
         localStorage.setItem("access-token", res?.data?.token);

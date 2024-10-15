@@ -38,7 +38,14 @@ const App = () => {
             )
           }
         />
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            />
+          }
+        >
           <Route path="/apartments" element={<Apartments />} />
         </Route>
         <Route
@@ -49,7 +56,6 @@ const App = () => {
             ) : (
               <Login
                 setIsAuthenticated={setIsAuthenticated}
-                isAuthenticated={isAuthenticated}
                 setAlert={setAlert}
               />
             )
@@ -63,7 +69,6 @@ const App = () => {
             ) : (
               <Register
                 setIsAuthenticated={setIsAuthenticated}
-                isAuthenticated={isAuthenticated}
                 setAlert={setAlert}
               />
             )

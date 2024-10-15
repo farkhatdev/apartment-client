@@ -4,8 +4,13 @@ import logoImg from "../utils/images/logo.png";
 import profilerImg from "../utils/images/profilePicture.png";
 import { BiSearch } from "react-icons/bi";
 import { RiMenu3Line } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
 
-const Navbar = () => {
+const Navbar = ({ setIsAuthenticated }) => {
+  const accessToken = localStorage.getItem("access-token");
+  const decoded = jwtDecode(accessToken);
+  const { phone, name } = decoded;
+
   return (
     <nav className="navbar">
       <div className="container">
@@ -14,15 +19,15 @@ const Navbar = () => {
             <div className="logo-img">
               <img src={logoImg} alt="" />
             </div>
-            <div className="search-bar">
-              <input
-                type="text"
-                className="search-input"
-                defaultValue={"Nukus"}
-              />
-              <div className="search-icon">
-                <BiSearch size={18} />
-              </div>
+          </div>
+          <div className="search-bar">
+            <input
+              type="text"
+              className="search-input"
+              defaultValue={"Nukus"}
+            />
+            <div className="search-icon">
+              <BiSearch size={18} />
             </div>
           </div>
           <div className="nav-left">
@@ -34,16 +39,19 @@ const Navbar = () => {
                 <img src={profilerImg} width={40} height={40} alt="" />
               </div>
               <div className="profile-info">
-                <h4 className="profile-name">Farkhat</h4>
-                <p>+998 93 614 27-24</p>
+                <h4 className="profile-name">{name}</h4>
+                <p>{phone}</p>
               </div>
             </div>
-            <div className="languages">
-              <select name="languages" id="">
-                <option value="uzb">UZB</option>
-                <option value="qq">QQ</option>
-              </select>
-            </div>
+            <button
+              className="logout-btn"
+              onClick={() => {
+                localStorage.removeItem("access-token");
+                setIsAuthenticated(false);
+              }}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>

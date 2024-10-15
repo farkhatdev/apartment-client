@@ -19,6 +19,8 @@
 .nav-right {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 .nav-left .menu-burger {
   display: none;
@@ -63,16 +65,20 @@
 .nav-left {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 .profile {
-  max-width: 200px;
-  width: 200px;
-  height: 45px;
+  max-width: 180px;
+  width: auto;
+  height: 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-right: 20px;
   cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .profile-img {
   width: 40px;
@@ -81,47 +87,39 @@
   align-items: center;
   justify-content: center;
 }
-.profile-info {
-  color: var(--text-color);
-}
 .profile .profile-img img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
 }
-.languages {
-  display: inline-block;
-  position: relative;
-}
-
-.languages select {
-  appearance: none;
-  background-color: #fff;
-  border: 2px solid #f0f0f0;
-  border-radius: 25px;
-  padding: 13px 16px;
-  padding-right: 30px;
-  font-size: 16px;
-  font-weight: 600;
+.profile-info {
   color: var(--text-color);
-  color: #666565;
+  width: 135px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 8px;
+}
+.profile-info h4 {
+  line-height: 18px;
+}
+.nav-left button.logout-btn {
+  background-color: rgb(251, 27, 68);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
   cursor: pointer;
-  outline: none;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: background-color 0.3s;
 }
-
-.languages::after {
-  content: "▼";
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #666565;
-}
-
-.languages select:hover + ::after {
-  color: #fff;
+.nav-left button.logout-btn:hover {
+  background-color: rgb(236, 29, 67);
+  transition: background-color 0.3s;
 }
 @media (max-width: 1015px) and (min-width: 864px) {
   .navbar .search-input {
