@@ -5,6 +5,7 @@
   justify-content: center;
 }
 .auth-page .form {
+  position: relative;
   max-width: 550px;
   width: 550px;
   background-color: #fff;

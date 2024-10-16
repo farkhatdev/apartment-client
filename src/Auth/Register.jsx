@@ -20,7 +20,8 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
     confirmPasword: "",
     verifyCode: "",
   });
-
+  // let localURL = "http://localhost:8080";
+  let URL = "https://apartment-gr2i0orv.b4a.run";
   useEffect(() => {
     setForm((prev) => {
       return { ...prev, verifyCode: "" };
@@ -59,10 +60,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
           return;
         }
         setLoading(true);
-        const response = await axios.post(
-          "https://apartment-gr2i0orv.b4a.run/auth/register",
-          form
-        );
+        const response = await axios.post(URL + "/auth/register", form);
         setAlert({
           message: response?.data?.message,
           type: "success",
@@ -82,10 +80,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
     } else if (step === 2) {
       try {
         setLoading(true);
-        let res = await axios.post(
-          "https://apartment-gr2i0orv.b4a.run/auth/verify-code",
-          form
-        );
+        let res = await axios.post(URL + "/auth/verify-code", form);
         localStorage.setItem("access-token", res?.data?.token);
         setIsAuthenticated(true);
         setAlert({
@@ -108,6 +103,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
     <div className="login auth-page container">
       {step === 1 ? (
         <form action="" onSubmit={handleSubmit} className="form">
+          <span className="step">{step} / 2</span>
           <div className="form-heading">
             <h2>Welcome, Create your account</h2>
           </div>
@@ -222,6 +218,7 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
         </form>
       ) : step === 2 ? (
         <form className="form" onSubmit={handleSubmit}>
+          <span className="step">{step} / 2</span>
           <div className="form-heading">
             <h2>Verify your phone number</h2>
           </div>

@@ -7,6 +7,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { jwtDecode } from "jwt-decode";
 import Alert from "./components/Alert";
 import Apartments from "./components/Apartments";
+import CreatePost from "./CreatePost/CreatePost";
+import Profile from "./Pages/Profile/Profile";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 const App = () => {
   const [alert, setAlert] = useState({
@@ -14,6 +17,7 @@ const App = () => {
     active: false,
     type: "error",
   });
+  const [sidebarActive, setSidebarActive] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const accessToken = localStorage.getItem("access-token");
@@ -26,6 +30,12 @@ const App = () => {
   return (
     <div className="app">
       {alert.active ? <Alert alert={alert} setAlert={setAlert} /> : null}
+      {sidebarActive ? (
+        <Sidebar
+          sidebarActive={sidebarActive}
+          setSidebarActive={setSidebarActive}
+        />
+      ) : null}
 
       <Routes>
         <Route
@@ -43,10 +53,13 @@ const App = () => {
             <ProtectedRoute
               isAuthenticated={isAuthenticated}
               setIsAuthenticated={setIsAuthenticated}
+              setSidebarActive={setSidebarActive}
             />
           }
         >
           <Route path="/apartments" element={<Apartments />} />
+          <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route
           path="/auth/login"

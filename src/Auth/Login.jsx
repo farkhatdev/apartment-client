@@ -40,6 +40,8 @@ const Login = ({ setIsAuthenticated, setAlert }) => {
     }
   };
   const handleSubmit = async (e) => {
+    // let localURL = "http://localhost:8080";
+    let URL = "https://apartment-gr2i0orv.b4a.run";
     try {
       e.preventDefault();
       const { phone, password } = form;
@@ -48,10 +50,7 @@ const Login = ({ setIsAuthenticated, setAlert }) => {
         return;
       }
       setLoading(true);
-      const response = await axios.post(
-        "https://apartment-gr2i0orv.b4a.run/auth/login",
-        form
-      );
+      const response = await axios.post(URL + "/auth/login", form);
       setLoading(false);
       localStorage.setItem("access-token", response?.data?.token);
       setAlert({
@@ -75,6 +74,7 @@ const Login = ({ setIsAuthenticated, setAlert }) => {
         <div className="form-heading">
           <h2>Welcome back, Log in</h2>
         </div>
+
         <div className="form-body">
           <div className="form-group">
             <label htmlFor="phone">

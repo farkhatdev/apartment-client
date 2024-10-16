@@ -10,6 +10,7 @@
 :root {
   --blue: #2b67f6;
   --text-color: #333333;
+  user-select: none;
 }
 body {
   color: var(--text-color);
@@ -24,9 +25,16 @@ body {
 }
 
 .container {
-  max-width: 90%;
+  max-width: 95%;
   width: 95%;
   margin: 0 auto;
+}
+
+.step {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: 600;
 }
 a {
   text-decoration: none;

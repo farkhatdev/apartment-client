@@ -1,51 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import "./sidebar.css";
 import { Link } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
-import { MdOutlineArrowCircleRight } from "react-icons/md";
 
-const Sidebar = () => {
-  const [active, setActive] = useState(false);
+const Sidebar = ({ sidebarActive, setSidebarActive }) => {
   const handleSidebar = () => {
-    setActive(false);
+    setSidebarActive(false);
   };
   return (
-    <div className={`sidebar ${active ? "active" : null}`}>
-      <div className="sidebar-controller-btn-group">
-        <div className="sidebar-controller-btn">
-          <MdOutlineArrowCircleRight
-            id="controll-icon"
-            size={30}
-            onClick={() => setActive((prev) => !prev)}
-          />
-        </div>
-      </div>
+    <div className={`sidebar ${sidebarActive ? "active" : null}`}>
       <ul>
-        <Link onClick={handleSidebar}>
+        <Link to={"/create-post"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
               <BiSearch size={18} />
             </div>
-            <p>Kunlik kvartira</p>
+            <p>Reklama beriw</p>
           </li>
         </Link>
-        <Link onClick={handleSidebar}>
+        <Link to={"/apartments"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
               <BiSearch size={18} />
             </div>
-            <p>Uzaq muddetke</p>
+            <p>Uzaq muddetli</p>
           </li>
         </Link>
-        <Link onClick={handleSidebar}>
+        <Link to={"/apartments"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
               <BiSearch size={18} />
             </div>
-            <p>Mening kvartiram</p>
+            <p>Kunlik kvartiralar</p>
           </li>
         </Link>
-        <Link onClick={handleSidebar}>
+        <Link to={"/profile"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
               <BiSearch size={18} />

@@ -1,13 +1,18 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
-import Sidebar from "./Sidebar/Sidebar";
 
-const ProtectedRoute = ({ isAuthenticated, setIsAuthenticated }) => {
+const ProtectedRoute = ({
+  isAuthenticated,
+  setIsAuthenticated,
+  setSidebarActive,
+}) => {
   return isAuthenticated ? (
     <>
-      <Navbar setIsAuthenticated={setIsAuthenticated} />
-      <Sidebar />
+      <Navbar
+        setIsAuthenticated={setIsAuthenticated}
+        setSidebarActive={setSidebarActive}
+      />
       <main className="main">
         <Outlet />
       </main>
