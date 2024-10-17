@@ -1,9 +1,6 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 
 const Profile = () => {
-  const [users, setUsers] = useState([]);
-  const InputRef = useRef();
-  const Input1Ref = useRef("");
   return (
     <div className="profile-page page">
       <div className="container">
