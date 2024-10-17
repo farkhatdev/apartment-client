@@ -3,11 +3,33 @@ import "./create-post.css";
 import { MdDelete } from "react-icons/md";
 import personSvg from "../utils/icons/person-svg.svg";
 import emailSvg from "../utils/icons/email.svg";
+import axios from "axios";
 
 const CreatePost = () => {
   const inputImgRef = useRef();
   const [step] = useState(1);
+  const [size, setSize] = useState(0);
   const [images, setImages] = useState([]);
+  let url = "https://apartment-gr2i0orv.b4a.run"; // "http://localhost:8080" ;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      images.map((image) => {
+        formData.append("images", image);
+      });
+      formData.append("info", { name: "farxat", password: "dd" });
+      const response = await axios.post(url + "/apartment", formData, {
+        headers: {
+          "Content-Type": "mulipart/form-date",
+        },
+      });
+      console.log(response, size);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="create-post page">
       <div className="container">
@@ -16,15 +38,14 @@ const CreatePost = () => {
             <span className="step">{step} / 3</span>
             <div className="posting-apartment-images">
               {images.map((image, index) => {
+                let url = URL.createObjectURL(image);
                 return (
                   <div key={index} className="posting-apartment-image">
-                    <img src={image.imgUrl} alt="" width={200} height={200} />
+                    <img src={url} alt="" width={200} height={200} />
                     <div className="delete-btn">
                       <button
                         onClick={() => {
-                          const newImgs = images.filter(
-                            (img) => img.id !== image.id
-                          );
+                          const newImgs = images.filter((img) => img !== image);
                           setImages(newImgs);
                         }}
                       >
@@ -39,19 +60,17 @@ const CreatePost = () => {
                   <div className="adding-apartment-btns">
                     <input
                       type="file"
-                      accept="image/*"
+                      // accept="image/*"
                       ref={inputImgRef}
                       style={{ display: "none" }}
                       onChange={() => {
                         const file = inputImgRef.current.files[0];
+                        setSize((prev) => prev + file.size);
                         if (!file) return;
                         const reader = new FileReader();
                         reader.onload = (e) => {
                           setImages((prev) => {
-                            return [
-                              ...prev,
-                              { imgUrl: e.target.result, id: prev.length + 1 },
-                            ];
+                            return [...prev, file];
                           });
                         };
                         reader.readAsDataURL(file);
@@ -69,7 +88,7 @@ const CreatePost = () => {
               )}
             </div>
 
-            <form className="apartment-post-form">
+            <form className="apartment-post-form" onSubmit={handleSubmit}>
               <div className="apartment-form-body">
                 <div className="apartment-post-form-columns">
                   <div className="form-group">
@@ -91,7 +110,7 @@ const CreatePost = () => {
                       placeholder="27 mikro rayon"
                       maxLength={20}
                       minLength={5}
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group">
@@ -111,7 +130,7 @@ const CreatePost = () => {
                       type="text"
                       autoComplete="off"
                       placeholder="Aydın jol MPJ Mega nukus qasinda"
-                      required
+                      // required
                     />
                   </div>
                 </div>
@@ -133,7 +152,7 @@ const CreatePost = () => {
                       type="text"
                       autoComplete="off"
                       placeholder="Student ballar"
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group">
@@ -154,7 +173,7 @@ const CreatePost = () => {
                       type="number"
                       autoComplete="off"
                       placeholder="3 000 000 sum"
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group">
@@ -175,7 +194,7 @@ const CreatePost = () => {
                       type="number"
                       autoComplete="off"
                       placeholder="3"
-                      required
+                      // required
                     />
                   </div>
                 </div>
@@ -197,7 +216,7 @@ const CreatePost = () => {
                       type="text"
                       autoComplete="off"
                       placeholder="Kunlik yaki ayliq"
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group">
@@ -217,7 +236,7 @@ const CreatePost = () => {
                       type="tel"
                       autoComplete="off"
                       placeholder="+998123456789"
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group">
@@ -237,7 +256,7 @@ const CreatePost = () => {
                       type="tel"
                       autoComplete="off"
                       placeholder="+998123456789"
-                      required
+                      // required
                     />
                   </div>
                 </div>
