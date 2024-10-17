@@ -30,12 +30,11 @@ const App = () => {
   return (
     <div className="app">
       {alert.active ? <Alert alert={alert} setAlert={setAlert} /> : null}
-      {sidebarActive ? (
-        <Sidebar
-          sidebarActive={sidebarActive}
-          setSidebarActive={setSidebarActive}
-        />
-      ) : null}
+
+      <Sidebar
+        sidebarActive={sidebarActive}
+        setSidebarActive={setSidebarActive}
+      />
 
       <Routes>
         <Route
