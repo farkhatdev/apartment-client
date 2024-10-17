@@ -6,20 +6,8 @@ import emailSvg from "../utils/icons/email.svg";
 
 const CreatePost = () => {
   const inputImgRef = useRef();
-  const [step, setStep] = useState(1);
-  const [images, setImages] = useState([
-    {
-      id: 1,
-      imgUrl:
-        "https://cdn.sanity.io/images/v48q37k7/production/228f18d0df80ed40b26ec6fe867f9d0c0243e07f-2478x1654.jpg?auto=format&fit=max&q=50&w=1239",
-    },
-    {
-      id: 2,
-      imgUrl: "https://www.book-a-flat.com/photo/paris/16272/salon-1.jpg",
-    },
-  ]);
-  const handleHoverEnter = () => {};
-  const handleHoverLeave = () => {};
+  const [step] = useState(1);
+  const [images, setImages] = useState([]);
   return (
     <div className="create-post page">
       <div className="container">
@@ -46,37 +34,39 @@ const CreatePost = () => {
                   </div>
                 );
               })}
-              <div className="adding-apartment-btns">
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={inputImgRef}
-                  style={{ display: "none" }}
-                  onChange={() => {
-                    const file = inputImgRef.current.files[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                      setImages((prev) => {
-                        return [
-                          ...prev,
-                          { imgUrl: e.target.result, id: prev.length + 1 },
-                        ];
-                      });
-                    };
-                    reader.readAsDataURL(file);
-                  }}
-                />
-                {images.length >= 6 ? null : (
-                  <button
-                    onClick={() => {
-                      inputImgRef.current.click();
-                    }}
-                  >
-                    Add image
-                  </button>
-                )}
-              </div>
+              {images.length >= 6 ? null : (
+                <>
+                  <div className="adding-apartment-btns">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={inputImgRef}
+                      style={{ display: "none" }}
+                      onChange={() => {
+                        const file = inputImgRef.current.files[0];
+                        if (!file) return;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                          setImages((prev) => {
+                            return [
+                              ...prev,
+                              { imgUrl: e.target.result, id: prev.length + 1 },
+                            ];
+                          });
+                        };
+                        reader.readAsDataURL(file);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        inputImgRef.current.click();
+                      }}
+                    >
+                      Add image
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             <form className="apartment-post-form">
