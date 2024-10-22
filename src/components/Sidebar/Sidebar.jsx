@@ -1,27 +1,24 @@
 import React from "react";
 import "./sidebar.css";
 import { Link } from "react-router-dom";
-import { BiSearch } from "react-icons/bi";
+import { BsClockHistory } from "react-icons/bs";
+import { AiOutlineHome } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
+import { BsCloudUpload } from "react-icons/bs";
 
 const Sidebar = ({ sidebarActive, setSidebarActive }) => {
   const handleSidebar = () => {
     setSidebarActive(false);
   };
+  const iconSize = 22;
+
   return (
     <div className={`sidebar ${sidebarActive ? "active" : null}`}>
       <ul>
-        <Link to={"/create-post"} onClick={handleSidebar}>
-          <li>
-            <div className="sidebar-icon">
-              <BiSearch size={18} />
-            </div>
-            <p>Reklama beriw</p>
-          </li>
-        </Link>
         <Link to={"/apartments"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
-              <BiSearch size={18} />
+              <AiOutlineHome size={iconSize} />
             </div>
             <p>Uzaq muddetli</p>
           </li>
@@ -29,15 +26,23 @@ const Sidebar = ({ sidebarActive, setSidebarActive }) => {
         <Link to={"/apartments"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
-              <BiSearch size={18} />
+              <BsClockHistory size={iconSize - 2} />
             </div>
             <p>Kunlik kvartiralar</p>
+          </li>
+        </Link>
+        <Link to={"/create-post"} onClick={handleSidebar}>
+          <li>
+            <div className="sidebar-icon">
+              <BsCloudUpload size={iconSize} />
+            </div>
+            <p>Reklama beriw</p>
           </li>
         </Link>
         <Link to={"/profile"} onClick={handleSidebar}>
           <li>
             <div className="sidebar-icon">
-              <BiSearch size={18} />
+              <CgProfile size={iconSize} />
             </div>
             <p>Profile</p>
           </li>

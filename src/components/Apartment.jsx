@@ -2,29 +2,40 @@ import React from "react";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 
-const Apartment = ({ apartments }) => {
+const Apartment = ({ apartment }) => {
+  const { shortAddress, fullAddress, forWhom, price, rooms, images, id } =
+    apartment;
+  const randomNumber = Math.floor(Math.random() * images.length);
+
+  const postedDate = new Date(id);
+  const date = {
+    year: postedDate.getFullYear(),
+    day: postedDate.getDate(),
+    month: postedDate.getMonth() + 1,
+    calculateMonth: () => {
+      console.log(this.month);
+    },
+  };
+  const { year, month, day } = date;
   return (
     <div className="apartment">
       <div className="apartment-main">
         <div className="apartment-main-img">
-          <img src={apartments} alt={apartments} />
+          <img src={images[randomNumber]} alt={images[randomNumber]} />
         </div>
         <div className="apartment-details">
-          <h2>26-mikro rayon</h2>
+          <h2>{shortAddress}</h2>
           <p>
-            Xanalar sani: <span>2</span>
+            Xanalar sani: <span>{rooms}</span>
           </p>
           <p>
-            Kimler ushin: <span>Studentler, Semeyniy</span>
+            Kimler ushin: <span>{forWhom}</span>
           </p>
           <p>
-            Baxasi: <span>2 500 000 sum /ayina</span>
+            Baxasi: <span>{price} sum /ayina</span>
           </p>
           <p>
-            Etaj: <span>4</span>
-          </p>
-          <p>
-            Orientr: <span>Gizapro oqiw orayi</span>
+            Orientr: <span>{fullAddress}</span>
           </p>
           <p>
             Shárayitlari: <span>Televizor, Muzlatqish, kir mashin</span>
@@ -32,19 +43,16 @@ const Apartment = ({ apartments }) => {
           <p>
             Adamlar sani: <span>5-6</span>
           </p>
-          {/* <div className="more-link">
-            <a href="#">Toliqraq</a>
-          </div> */}
         </div>
       </div>
       <div className="apartment-info">
         <div className="upload-date">
           <CiCalendarDate size={22} />
-          <span>15.10.2024 20:28</span>
+          <span>{`${day}.${month}.${year} | 20:28`}</span>
         </div>
         <div className="count-views">
           <IoEyeOutline size={22} />
-          <span>213</span>
+          <span>345</span>
         </div>
       </div>
     </div>

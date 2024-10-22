@@ -1,7 +1,5 @@
 import React from "react";
 import "./navbar.css";
-import logoImg from "../../utils/images/logo1.png";
-import profilerImg from "../../utils/images/profilePicture.png";
 import { LuMenu } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -24,7 +22,10 @@ const Navbar = ({ setIsAuthenticated, setSidebarActive }) => {
             </div>
             <div className="logo-img">
               <Link to={"/apartments"}>
-                <img src={logoImg} alt="" />
+                <img
+                  src="https://storage.googleapis.com/apartments-d014c.appspot.com/998999542003/1729628031566-logo%20(2).png"
+                  alt=""
+                />
               </Link>
             </div>
           </div>
@@ -61,7 +62,12 @@ const Navbar = ({ setIsAuthenticated, setSidebarActive }) => {
           <div className="nav-right">
             <div className="profile">
               <div className="profile-img">
-                <img src={profilerImg} width={40} height={40} alt="" />
+                <img
+                  src="https://www.pngitem.com/pimgs/m/404-4042710_circle-profile-picture-png-transparent-png.png"
+                  width={45}
+                  height={45}
+                  alt=""
+                />
               </div>
               <div className="profile-info">
                 <h4 className="profile-name">{name}</h4>

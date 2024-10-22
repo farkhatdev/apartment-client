@@ -57,7 +57,10 @@ const App = () => {
           }
         >
           <Route path="/apartments" element={<Apartments />} />
-          <Route path="/create-post" element={<CreatePost />} />
+          <Route
+            path="/create-post"
+            element={<CreatePost setAlert={setAlert} />}
+          />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route

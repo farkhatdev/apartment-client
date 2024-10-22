@@ -1,32 +1,89 @@
 import React, { useRef, useState } from "react";
-import "./create-post.css";
+import "./createPost.css";
 import { MdDelete } from "react-icons/md";
 import personSvg from "../utils/icons/person-svg.svg";
 import emailSvg from "../utils/icons/email.svg";
 import axios from "axios";
 
-const CreatePost = () => {
+const CreatePost = ({ setAlert }) => {
   const inputImgRef = useRef();
-  const [step] = useState(1);
-  const [size, setSize] = useState(0);
   const [images, setImages] = useState([]);
-  let url = "https://apartment-gr2i0orv.b4a.run"; // "http://localhost:8080" ;
+  let url = "http://localhost:8080";
+  const accessToken = localStorage.getItem("access-token");
+  const [step] = useState(1);
+  const [form, setForm] = useState({
+    shortAddress: "",
+    fullAddress: "",
+    forWhom: "",
+    price: "",
+    rooms: "",
+    duration: "",
+    phone1: "",
+    phone2: "",
+  });
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    let name = e.target.name;
+    const lastLetter = value.at(value.length - 1);
+    const regex = /^[0-9]*$/;
+    if (name === "phone1" || name === "phone2") {
+      if (!regex.test(lastLetter)) return;
+      let phoneNum = String(e.target.value);
+      if (!phoneNum.startsWith("+998")) {
+        setForm((prev) => {
+          return { ...prev, [name]: "+998" };
+        });
+      } else {
+        setForm((prev) => {
+          return { ...prev, [name]: value };
+        });
+      }
+    } else {
+      setForm((prev) => {
+        return { ...prev, [name]: value };
+      });
+    }
+  };
+  const clearData = () => {
+    setImages([]);
+    setForm({
+      shortAddress: "",
+      fullAddress: "",
+      forWhom: "",
+      price: "",
+      rooms: "",
+      duration: "",
+      phone1: "",
+      phone2: "",
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (images.length <= 2) return alert("en kemi 3 photo");
       const formData = new FormData();
-      images.map((image) => {
-        formData.append("images", image);
-      });
-      formData.append("info", { name: "farxat", password: "dd" });
+      images.map((image) => formData.append("images", image));
+      formData.append("info", JSON.stringify(form));
       const response = await axios.post(url + "/apartment", formData, {
         headers: {
           "Content-Type": "mulipart/form-date",
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response, size);
+      setAlert({
+        message: response?.data?.message,
+        type: "success",
+        active: true,
+      });
+      clearData();
     } catch (error) {
-      console.log(error);
+      setAlert({
+        message: error?.response?.data?.message || "Error",
+        type: "error",
+        active: true,
+      });
     }
   };
 
@@ -60,12 +117,11 @@ const CreatePost = () => {
                   <div className="adding-apartment-btns">
                     <input
                       type="file"
-                      // accept="image/*"
+                      accept="image/*"
                       ref={inputImgRef}
                       style={{ display: "none" }}
                       onChange={() => {
                         const file = inputImgRef.current.files[0];
-                        setSize((prev) => prev + file.size);
                         if (!file) return;
                         const reader = new FileReader();
                         reader.onload = (e) => {
@@ -92,7 +148,7 @@ const CreatePost = () => {
               <div className="apartment-form-body">
                 <div className="apartment-post-form-columns">
                   <div className="form-group">
-                    <label htmlFor="address">
+                    <label htmlFor="shortAddress">
                       <img
                         className="form-icon"
                         src={personSvg}
@@ -101,20 +157,22 @@ const CreatePost = () => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="address">Qısqa address:</label>
+                    <label htmlFor="shortAddress">Qısqa address:</label>
                     <input
-                      id="address"
-                      name="address"
+                      id="shortAddress"
+                      name="shortAddress"
                       type="text"
                       autoComplete="off"
                       placeholder="27 mikro rayon"
                       maxLength={20}
                       minLength={5}
-                      // required
+                      value={form.shortAddress}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="fullAddres">
+                    <label htmlFor="fullAddress">
                       <img
                         className="form-icon"
                         src={emailSvg}
@@ -123,20 +181,22 @@ const CreatePost = () => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="fullAddres">Tolıq address:</label>
+                    <label htmlFor="fullAddress">Tolıq address:</label>
                     <input
-                      id="fullAddres"
-                      name="fullAddres"
+                      id="fullAddress"
+                      name="fullAddress"
                       type="text"
+                      value={form.fullAddress}
+                      onChange={handleChange}
                       autoComplete="off"
                       placeholder="Aydın jol MPJ Mega nukus qasinda"
-                      // required
+                      required
                     />
                   </div>
                 </div>
                 <div className="apartment-post-form-columns">
                   <div className="form-group">
-                    <label htmlFor="for-whom">
+                    <label htmlFor="forWhom">
                       <img
                         className="form-icon"
                         src={personSvg}
@@ -145,14 +205,16 @@ const CreatePost = () => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="for-whom">Kimler ushın:</label>
+                    <label htmlFor="forWhom">Kimler ushın:</label>
                     <input
-                      id="for-whom"
-                      name="for-whom"
+                      id="forWhom"
+                      name="forWhom"
                       type="text"
                       autoComplete="off"
                       placeholder="Student ballar"
-                      // required
+                      value={form.forWhom}
+                      onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -171,9 +233,11 @@ const CreatePost = () => {
                       id="price"
                       name="price"
                       type="number"
+                      value={form.price}
+                      onChange={handleChange}
                       autoComplete="off"
                       placeholder="3 000 000 sum"
-                      // required
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -192,9 +256,12 @@ const CreatePost = () => {
                       id="rooms"
                       name="rooms"
                       type="number"
+                      value={form.rooms}
+                      onChange={handleChange}
                       autoComplete="off"
                       placeholder="3"
-                      // required
+                      maxLength={2}
+                      required
                     />
                   </div>
                 </div>
@@ -214,13 +281,15 @@ const CreatePost = () => {
                       id="duration"
                       name="duration"
                       type="text"
+                      value={form.duration}
+                      onChange={handleChange}
                       autoComplete="off"
                       placeholder="Kunlik yaki ayliq"
-                      // required
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="tel1">
+                    <label htmlFor="phone1">
                       <img
                         className="form-icon"
                         src={emailSvg}
@@ -229,18 +298,29 @@ const CreatePost = () => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="tel1">Baylanıs 1:</label>
+                    <label htmlFor="phone1">Baylanıs 1:</label>
                     <input
-                      id="tel1"
-                      name="tel1"
+                      id="phone1"
+                      name="phone1"
+                      value={form.phone1}
+                      onChange={handleChange}
                       type="tel"
+                      maxLength={13}
+                      minLength={13}
                       autoComplete="off"
                       placeholder="+998123456789"
-                      // required
+                      onFocus={() => {
+                        if (form.phone1 === "") {
+                          setForm((prev) => {
+                            return { ...prev, phone1: "+998" };
+                          });
+                        }
+                      }}
+                      required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="tel2">
+                    <label htmlFor="phone2">
                       <img
                         className="form-icon"
                         src={emailSvg}
@@ -249,19 +329,32 @@ const CreatePost = () => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="tel2">Baylanıs 2:</label>
+                    <label htmlFor="phone2">Baylanıs 2:</label>
                     <input
-                      id="tel2"
-                      name="tel2"
+                      id="phone2"
+                      name="phone2"
                       type="tel"
+                      value={form.phone2}
+                      maxLength={13}
+                      minLength={13}
+                      onChange={handleChange}
                       autoComplete="off"
                       placeholder="+998123456789"
-                      // required
+                      onFocus={() => {
+                        if (form.phone2 === "") {
+                          setForm((prev) => {
+                            return { ...prev, phone2: "+998" };
+                          });
+                        }
+                      }}
+                      required
                     />
                   </div>
                 </div>
                 <div className="form-btn-group">
-                  <button type="reset">Clear</button>
+                  <button type="reset" onClick={clearData}>
+                    Clear
+                  </button>
                   <button type="submit">Next</button>
                 </div>
               </div>

@@ -64,31 +64,34 @@
 .delete-btn {
   display: none;
   transition: display 1s;
+  align-items: center;
+  justify-content: center;
 }
 .posting-apartment-image:hover .delete-btn {
   display: flex;
+  background-color: aqua;
   transition: display 1s;
 }
 .delete-btn button {
   position: absolute;
-  top: 50%;
+  top: 8px;
+  right: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
+  height: 40px;
+  width: 40px;
   left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgb(246, 39, 28);
   border: none;
   color: white;
   border-radius: 10px;
-  padding: 7px 7px;
   font-size: 25px;
   cursor: pointer;
   text-align: center;
 }
 .adding-apartment-btns {
-  margin-left: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,8 +153,8 @@
   .posting-apartment-images {
     flex-wrap: wrap;
   }
-  .adding-apartment-btns {
+  /* .adding-apartment-btns {
     margin: 15px 0;
     margin-left: 15px;
-  }
+  } */
 }
