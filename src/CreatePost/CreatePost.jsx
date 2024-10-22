@@ -8,7 +8,7 @@ import axios from "axios";
 const CreatePost = ({ setAlert }) => {
   const inputImgRef = useRef();
   const [images, setImages] = useState([]);
-  let url = "http://localhost:8080";
+  let url = "https://apartment-gr2i0orv.b4a.run";
   const accessToken = localStorage.getItem("access-token");
   const [step] = useState(1);
   const [form, setForm] = useState({

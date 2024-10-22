@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Apartments = () => {
   const [data, setData] = useState([]);
-  let localURL = "http://localhost:8080";
+  let localURL = "https://apartment-gr2i0orv.b4a.run";
   useEffect(() => {
     async function fetchData() {
       try {
