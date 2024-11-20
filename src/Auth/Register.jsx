@@ -7,8 +7,11 @@ import verifySvg from "../utils/icons/verified-svgrepo-com.svg";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../store/slices/uiSlice";
 
-const Register = ({ setIsAuthenticated, setAlert }) => {
+const Register = ({ setIsAuthenticated }) => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState(null);
@@ -61,41 +64,51 @@ const Register = ({ setIsAuthenticated, setAlert }) => {
         }
         setLoading(true);
         const response = await axios.post(URL + "/auth/register", form);
-        setAlert({
-          message: response?.data?.message,
-          type: "success",
-          active: true,
-        });
+
+        dispatch(
+          setAlert({
+            message: response?.data?.message,
+            type: "success",
+            active: true,
+          })
+        );
         setOtp(response?.data?.otp);
         setStep(2);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setAlert({
-          message: error?.response?.data?.message || "Error",
-          type: "error",
-          active: true,
-        });
+        dispatch(
+          setAlert({
+            message: error?.response?.data?.message || "Error",
+            type: "error",
+            active: true,
+          })
+        );
       }
     } else if (step === 2) {
       try {
         setLoading(true);
-        let res = await axios.post(URL + "/auth/verify-code", form);
-        localStorage.setItem("access-token", res?.data?.token);
+        let response = await axios.post(URL + "/auth/verify-code", form);
+        localStorage.setItem("access-token", response?.data?.token);
         setIsAuthenticated(true);
-        setAlert({
-          message: res?.data?.message,
-          type: "success",
-          active: true,
-        });
+        dispatch(
+          setAlert({
+            message: response?.data?.message,
+            type: "success",
+            active: true,
+          })
+        );
+
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setAlert({
-          message: error?.response?.data?.message || "Error",
-          type: "error",
-          active: true,
-        });
+        dispatch(
+          setAlert({
+            message: error?.response?.data?.message || "Error",
+            type: "error",
+            active: true,
+          })
+        );
       }
     }
   };

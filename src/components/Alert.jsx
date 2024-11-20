@@ -2,16 +2,18 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { CiCircleCheck } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { setAlert } from "../store/slices/uiSlice";
 
-const Alert = ({ alert, setAlert }) => {
-  if (alert.active) {
+const Alert = () => {
+  const alert1 = useSelector((state) => state.ui.alert);
+  const dispatch = useDispatch();
+  if (alert1.active) {
     setTimeout(() => {
-      setAlert((prev) => {
-        return { ...prev, active: false };
-      });
+      dispatch(setAlert({ ...alert1, active: false }));
     }, 1300);
   }
-  const { message, type, active } = alert;
+  const { message, type, active } = alert1;
   let size = 25;
   return (
     <div className={`alert ${type} ${active ? "active" : null}`}>
@@ -26,9 +28,7 @@ const Alert = ({ alert, setAlert }) => {
       <div
         className="alert-icon close"
         onClick={() => {
-          setAlert((prev) => {
-            return { ...prev, active: false };
-          });
+          dispatch(setAlert({ ...alert1, active: false }));
         }}
       >
         <IoMdClose size={size} />

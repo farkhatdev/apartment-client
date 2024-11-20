@@ -5,10 +5,13 @@ import passwordSvg from "../utils/icons/password.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../store/slices/uiSlice";
 
-const Login = ({ setIsAuthenticated, setAlert }) => {
+const Login = ({ setIsAuthenticated }) => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ phone: "", password: "" });
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     try {
       let value = e.target.value;
@@ -53,19 +56,24 @@ const Login = ({ setIsAuthenticated, setAlert }) => {
       const response = await axios.post(URL + "/auth/login", form);
       setLoading(false);
       localStorage.setItem("access-token", response?.data?.token);
-      setAlert({
-        message: response?.data?.message,
-        type: "success",
-        active: true,
-      });
+
+      dispatch(
+        setAlert({
+          text: response?.data?.message,
+          active: true,
+          type: "success",
+        })
+      );
       setIsAuthenticated(true);
     } catch (error) {
       setLoading(false);
-      setAlert({
-        message: error?.response?.data?.message || "Error",
-        type: "error",
-        active: true,
-      });
+      dispatch(
+        setAlert({
+          message: error?.response?.data?.message || "Error",
+          type: "error",
+          active: true,
+        })
+      );
     }
   };
   return (

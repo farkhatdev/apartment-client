@@ -3,25 +3,29 @@ import { CiCalendarDate } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 
 const Apartment = ({ apartment }) => {
-  const { shortAddress, fullAddress, forWhom, price, rooms, images, id } =
-    apartment;
-  const randomNumber = Math.floor(Math.random() * images.length);
+  const {
+    shortAddress,
+    fullAddress,
+    forWhom,
+    price,
+    rooms,
+    images,
+    id,
+    phone1,
+  } = apartment;
 
   const postedDate = new Date(id);
   const date = {
     year: postedDate.getFullYear(),
     day: postedDate.getDate(),
     month: postedDate.getMonth() + 1,
-    calculateMonth: () => {
-      console.log(this.month);
-    },
   };
   const { year, month, day } = date;
   return (
     <div className="apartment">
       <div className="apartment-main">
         <div className="apartment-main-img">
-          <img src={images[randomNumber]} alt={images[randomNumber]} />
+          <img src={images[0]} alt={images[0]} />
         </div>
         <div className="apartment-details">
           <h2>{shortAddress}</h2>
@@ -41,7 +45,7 @@ const Apartment = ({ apartment }) => {
             Shárayitlari: <span>Televizor, Muzlatqish, kir mashin</span>
           </p>
           <p>
-            Adamlar sani: <span>5-6</span>
+            Baylanıs: <span>{phone1}</span>
           </p>
         </div>
       </div>

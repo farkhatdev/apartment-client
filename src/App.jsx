@@ -6,47 +6,37 @@ import Register from "./Auth/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { jwtDecode } from "jwt-decode";
 import Alert from "./components/Alert";
-import Apartments from "./components/Apartments";
-import CreatePost from "./CreatePost/CreatePost";
 import Profile from "./Pages/Profile/Profile";
 import Sidebar from "./components/Sidebar/Sidebar";
+import { useSelector } from "react-redux";
+import { Apartments } from "../../server/src/model/schema";
+import CreatePost from "./CreatePost/CreatePost";
+import OneApartment from "./components/Apartments/OneApartment";
+import Home from "./components/Home";
 
 const App = () => {
-  const [alert, setAlert] = useState({
-    message: "Error",
-    active: false,
-    type: "error",
-  });
+  const alert = useSelector((state) => state.ui.alert);
+
   const [sidebarActive, setSidebarActive] = useState(false);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  const [setIsAuthenticated] = useState(() => {
     const accessToken = localStorage.getItem("access-token");
     if (!accessToken) return false;
-
     const decoded = jwtDecode(accessToken);
     return decoded.exp > Date.now() / 1000;
   });
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="app">
-      {alert.active ? <Alert alert={alert} setAlert={setAlert} /> : null}
-
+      {alert.active ? <Alert /> : null}
       <Sidebar
         sidebarActive={sidebarActive}
         setSidebarActive={setSidebarActive}
       />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/apartments" />
-            ) : (
-              <Navigate to="/auth/login" />
-            )
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           element={
             <ProtectedRoute
@@ -57,10 +47,8 @@ const App = () => {
           }
         >
           <Route path="/apartments" element={<Apartments />} />
-          <Route
-            path="/create-post"
-            element={<CreatePost setAlert={setAlert} />}
-          />
+          <Route path="/apartment/:id" element={<OneApartment />} />
+          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route
@@ -69,10 +57,7 @@ const App = () => {
             isAuthenticated ? (
               <Navigate to="/" />
             ) : (
-              <Login
-                setIsAuthenticated={setIsAuthenticated}
-                setAlert={setAlert}
-              />
+              <Login setIsAuthenticated={setIsAuthenticated} />
             )
           }
         />
@@ -82,10 +67,7 @@ const App = () => {
             isAuthenticated ? (
               <Navigate to="/" />
             ) : (
-              <Register
-                setIsAuthenticated={setIsAuthenticated}
-                setAlert={setAlert}
-              />
+              <Register setIsAuthenticated={setIsAuthenticated} />
             )
           }
         />

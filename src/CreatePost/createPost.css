@@ -69,7 +69,6 @@
 }
 .posting-apartment-image:hover .delete-btn {
   display: flex;
-  background-color: aqua;
   transition: display 1s;
 }
 .delete-btn button {
@@ -82,7 +81,6 @@
   margin: 0;
   height: 40px;
   width: 40px;
-  left: 50%;
   background-color: rgb(246, 39, 28);
   border: none;
   color: white;

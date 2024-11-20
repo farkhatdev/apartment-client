@@ -4,11 +4,15 @@ import { MdDelete } from "react-icons/md";
 import personSvg from "../utils/icons/person-svg.svg";
 import emailSvg from "../utils/icons/email.svg";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../store/slices/uiSlice";
 
-const CreatePost = ({ setAlert }) => {
+const CreatePost = () => {
+  const dispatch = useDispatch();
   const inputImgRef = useRef();
   const [images, setImages] = useState([]);
-  let url = "https://apartment-gr2i0orv.b4a.run";
+  let localURL = "http://localhost:8080";
+  // let url = "https://apartment-gr2i0orv.b4a.run";
   const accessToken = localStorage.getItem("access-token");
   const [step] = useState(1);
   const [form, setForm] = useState({
@@ -66,24 +70,28 @@ const CreatePost = ({ setAlert }) => {
       const formData = new FormData();
       images.map((image) => formData.append("images", image));
       formData.append("info", JSON.stringify(form));
-      const response = await axios.post(url + "/apartment", formData, {
+      const response = await axios.post(localURL + "/apartment", formData, {
         headers: {
-          "Content-Type": "mulipart/form-date",
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setAlert({
-        message: response?.data?.message,
-        type: "success",
-        active: true,
-      });
+      dispatch(
+        setAlert({
+          message: response?.data?.message,
+          type: "success",
+          active: true,
+        })
+      );
       clearData();
     } catch (error) {
-      setAlert({
-        message: error?.response?.data?.message || "Error",
-        type: "error",
-        active: true,
-      });
+      dispatch(
+        setAlert({
+          message: error?.response?.data?.message || "Error",
+          type: "error",
+          active: true,
+        })
+      );
     }
   };
 
@@ -250,7 +258,7 @@ const CreatePost = ({ setAlert }) => {
                         alt=""
                       />
                     </label>
-                    <label htmlFor="rooms">Xanalar sani:</label>
+                    <label htmlFor="rooms">Xanalar sanı:</label>
                     <input
                       className="custom-number-input"
                       id="rooms"
